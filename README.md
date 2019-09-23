@@ -35,7 +35,6 @@ metadata:
     app: spring-boot-demo
     name: spring-boot-demo
   name: spring-boot-demo-pipeline
-  selfLink: /apis/build.openshift.io/v1/namespaces/demo/buildconfigs/spring-boot-demo-pipeline
 spec:
   failedBuildsHistoryLimit: 5
   nodeSelector: {}
@@ -93,11 +92,14 @@ spec:
             }
             stage('Build Image') {
               steps {
-
                 script {
+                  APP_FILENAME = sh (
+                    script: 'ls target/*.jar | awk -F "/" "{print \\$2}"',
+                    returnStdout: true
+                  ).trim()
                   openshift.withCluster() {
                     openshift.withProject("${DEV_PROJECT}") {
-                      openshift.selector("bc", "${APP_NAME}").startBuild("--from-file=target/demo-0.0.1-SNAPSHOT.jar", "--wait=true")
+                      openshift.selector("bc", "${APP_NAME}").startBuild("--from-file=target/${APP_FILENAME}", "--wait=true")
                     }
                   }
                 }

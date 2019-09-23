@@ -10,6 +10,9 @@ oc project demo
 ### 创建应用
 ```
 oc new-app --image-stream=spring-boot-demo:latest --allow-missing-images
+oc rollout pause dc/spring-boot-demo
+oc set env dc spring-boot-demo JAVA_ARGS=--spring.config.location=/opt/conf/application.properties TZ=Asia/Shanghai LANG=zh_CN.UTF-8
+oc rollout resume dc/spring-boot-demo
 ```
 
 ### 创建BuildConfig

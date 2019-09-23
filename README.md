@@ -157,3 +157,6 @@ oc create -f pipeline.yml
 ```
 oc start-build spring-boot-demo-pipeline
 ```
+
+### RedHat OpenJDK8 使用手册
+https://access.redhat.com/documentation/en-us/red_hat_jboss_middleware_for_openshift/3/html-single/red_hat_java_s2i_for_openshift/index
